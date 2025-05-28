@@ -3,21 +3,7 @@ import React from 'react';
 function App() {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="bg-white shadow-md fixed w-full z-50">
-        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-blue-600">Blogify</h1>
-          <nav className="hidden md:flex space-x-8">
-            <a href="#features" className="text-gray-700 hover:text-blue-600 transition">Features</a>
-            <a href="#testimonials" className="text-gray-700 hover:text-blue-600 transition">Testimonials</a>
-            <a href="#contact" className="text-gray-700 hover:text-blue-600 transition">Get Started</a>
-          </nav>
-          <button className="md:hidden text-gray-700">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        </div>
+      {/* Header 
       </header>
 
       {/* Hero Section */}
