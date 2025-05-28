@@ -3,7 +3,7 @@ import { features } from '../data/mockData';
 
 const WhyChooseUs = () => {
   return (
-    <section id="about" className="py-20 bg-gray-50">
+    <section id="about" className="py-20 bg-gray-50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -96,9 +96,7 @@ const WhyChooseUs = () => {
                 </div>
                 <h4 className="text-xl font-bold text-gray-900 mb-3">{item.title}</h4>
                 <p className="text-gray-600">{item.description}</p>
-                {index < 3 && (
-                  <div className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-blue-300 to-purple-300 transform translate-x-4"></div>
-                )}
+             
               </div>
             ))}
           </div>
