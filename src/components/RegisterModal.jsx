@@ -96,7 +96,7 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
       // Create username from first and last name
       const username = `${formData.firstName}${formData.lastName || ''}`.toLowerCase();
       
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post('http://codinghunters-production.up.railway.app/api/auth/register', {
         username,
         email: formData.email,
         password: formData.password

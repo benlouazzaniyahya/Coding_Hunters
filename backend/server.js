@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
@@ -166,7 +166,7 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-app.get('/api/auth/profile', auth, (req, res) => {
+app.get('/api/auth/profile', (req, res) => {
   try {
     const users = readUsers();
     const user = users.find(u => u.id === req.user.id);

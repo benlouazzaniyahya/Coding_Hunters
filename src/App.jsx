@@ -46,7 +46,7 @@ function App() {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/posts');
+      const response = await axios.get('http://codinghunters-production.up.railway.app/api/posts');
       setPosts(response.data);
       setLoading(false);
     } catch (error) {

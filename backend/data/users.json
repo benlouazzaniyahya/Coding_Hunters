@@ -46,5 +46,13 @@
     "password": "$2b$10$8eWDWgnd1UBrffuWLq8gDO1hnLF3kuKRC3wOqNHFrJSaViHh5jXia",
     "createdAt": "2025-05-29T10:10:31.060Z",
     "bio": ""
+  },
+  {
+    "id": "1748522701440",
+    "username": "msi",
+    "email": "msi@gmail.com",
+    "password": "$2b$10$sVHfIpvuX6oUrwmmgXl7h.MNETn1IyhQSCm2Nz9QjltHGPuqbGpYi",
+    "createdAt": "2025-05-29T12:45:01.440Z",
+    "bio": ""
   }
 ]
