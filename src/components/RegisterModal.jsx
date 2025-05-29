@@ -90,15 +90,29 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
     if (!validateForm()) return;
     
     setIsLoading(true);
+    setErrors({}); // Clear previous errors
     
     try {
+      // Create username from first and last name
+      const username = `${formData.firstName}${formData.lastName || ''}`.toLowerCase();
+      
       const response = await axios.post('http://localhost:5000/api/auth/register', {
-        username: formData.firstName,
+        username,
         email: formData.email,
         password: formData.password
       });
       
-      // Store the token
+      // Handle successful registration
+      localStorage.setItem('userToken', response.data.token);
+      localStorage.setItem('user', JSON.stringify({
+        id: response.data._id,
+        username: response.data.username,
+        email: response.data.email
+      }));
+      
+      // Close modal and redirect
+      onClose();
+      navigate('/dashboard');
       localStorage.setItem('token', response.data.token);
       
       // Reset form and close modal
@@ -119,7 +133,48 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
       window.location.reload();
       
     } catch (error) {
-      setErrors({ general: error.response?.data?.message || 'Registration failed. Please try again.' });
+      console.error('Registration failed:', error);
+      
+      // Handle validation errors from backend
+      if (error.response?.data?.errors) {
+        const backendErrors = {};
+        const errorMap = error.response.data.errors;
+        
+        // Map backend field names to form field names
+        if (errorMap.username) {
+          // If username error is about length, it's because first+last name is too short
+          if (errorMap.username.includes('shorter than the minimum allowed length')) {
+            backendErrors.firstName = 'First and last name combined must be at least 3 characters';
+          } else {
+            backendErrors.username = errorMap.username;
+          }
+        }
+        
+        if (errorMap.email) {
+          backendErrors.email = errorMap.email;
+        }
+        
+        if (errorMap.password) {
+          // Make password error messages more user-friendly
+          if (errorMap.password.includes('shorter than the minimum allowed length')) {
+            backendErrors.password = 'Password must be at least 6 characters';
+          } else {
+            backendErrors.password = errorMap.password;
+          }
+        }
+        
+        setErrors(prev => ({
+          ...prev,
+          ...backendErrors,
+          form: 'Please correct the errors below.'
+        }));
+      } else {
+        // Handle other types of errors
+        setErrors(prev => ({
+          ...prev,
+          form: error.response?.data?.message || 'Registration failed. Please try again.'
+        }));
+      }
     } finally {
       setIsLoading(false);
     }

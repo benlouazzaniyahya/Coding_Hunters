@@ -14,5 +14,29 @@
     "password": "$2b$10$vQGf4sVkjaQ3Nb.TD6TjqePOLh0yTDV3jvT1oX.YVpiuF8tn2tztK",
     "createdAt": "2025-05-29T04:06:47.554Z",
     "bio": "slkk olks lk djolkmj ^msj mndl icjb fmo c"
+  },
+  {
+    "id": "1748503968549",
+    "username": "testuser",
+    "email": "test@example.com",
+    "password": "$2b$10$iox7sZ1ra.LzEHo78prhJO7Bn9fgoESEsA63mMSMJLEJfbVhOPNSW",
+    "createdAt": "2025-05-29T07:32:48.549Z",
+    "bio": ""
+  },
+  {
+    "id": "1748504060813",
+    "username": "zkjjkjhkjhk",
+    "email": "jhkjhkjh@gmail.com",
+    "password": "$2b$10$QrHkOMfMvX1dI4SFHCwqae4r5/rMY7SSRLEs1ryS.s2WjMFi.U3Hq",
+    "createdAt": "2025-05-29T07:34:20.813Z",
+    "bio": ""
+  },
+  {
+    "id": "1748504430297",
+    "username": "kjhkjhkjhkjh",
+    "email": "kjhskjd@gmail.com",
+    "password": "$2b$10$Qxa.XC11aDxL4ZMQA3fENemTBl6wqat9ZFUtYVFKosW4AMm/D0.1e",
+    "createdAt": "2025-05-29T07:40:30.297Z",
+    "bio": ""
   }
 ]

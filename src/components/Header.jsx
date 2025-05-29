@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { navigationItems } from '../data/mockData';
+import axios from 'axios';
 import { UserCircleIcon, BellIcon, ChatBubbleLeftIcon, Bars3Icon, XMarkIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 
 const Header = ({ onOpenLogin, onOpenRegister }) => {
@@ -11,6 +12,8 @@ const Header = ({ onOpenLogin, onOpenRegister }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [profile, setProfile] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [notifications] = useState([
     { id: 1, text: 'John liked your post', time: '2m ago' },
     { id: 2, text: 'New solution to your problem', time: '1h ago' },
@@ -28,9 +31,31 @@ const Header = ({ onOpenLogin, onOpenRegister }) => {
     { id: 3, from: 'Charlie', text: 'Check this out', time: '1h ago' },
   ]);
 
+  // Fetch user profile when logged in
+  const fetchProfile = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setIsLoggedIn(false);
+        return;
+      }
+      
+      const response = await axios.get('http://localhost:5000/api/auth/profile', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setProfile(response.data);
+      setIsLoggedIn(true);
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+      localStorage.removeItem('token');
+      setIsLoggedIn(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
+    fetchProfile();
     
     const handleClickOutside = (event) => {
       if (showProfile && !event.target.closest('.profile-menu')) {
@@ -171,48 +196,29 @@ const Header = ({ onOpenLogin, onOpenRegister }) => {
 
                   {/* Profile */}
                   <div className="relative">
-                    <button
-                      onClick={() => {
-                        setShowProfile(!showProfile);
-                        setShowNotifications(false);
-                        setShowMessages(false);
-                      }}
-                      className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative"
+                    <Link 
+                      to="/profile"
+                      className="p-1 rounded-full hover:bg-gray-100 transition-colors relative block"
+                      title="View Profile"
                     >
-                      <UserCircleIcon className="w-6 h-6 text-gray-700" />
-                    </button>
-                    {showProfile && (
-                      <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50 border border-gray-200">
-                        <Link
-                          to="/profile"
-                          className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
-                          onClick={() => setShowProfile(false)}
-                        >
-                          View Profile
-                        </Link>
-                        <Link
-                          to="/settings"
-                          className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
-                          onClick={() => setShowProfile(false)}
-                        >
-                          Settings
-                        </Link>
-                        <button
-                          onClick={() => {
-                            handleLogout();
-                            setShowProfile(false);
-                          }}
-                          className="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors"
-                        >
-                          Logout
-                        </button>
-                      </div>
-                    )}
+                      {profile?.profilePicture ? (
+                        <img 
+                          src={`/uploads/${profile.profilePicture}`} 
+                          alt="Profile" 
+                          className="w-8 h-8 rounded-full object-cover border-2 border-white"
+                        />
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white">
+                          {profile?.username?.charAt(0).toUpperCase() || <UserCircleIcon className="w-6 h-6" />}
+                        </div>
+                      )}
+                    </Link>
                   </div>
                   {/* Logout */}
                   <button
                     onClick={handleLogout}
                     className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-red-50 transition-colors text-red-600 group"
+                    title="Logout"
                   >
                     <ArrowRightOnRectangleIcon className="w-6 h-6 group-hover:text-red-700" />
                     <span className="font-medium group-hover:text-red-700">Logout</span>
