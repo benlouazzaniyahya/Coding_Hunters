@@ -166,7 +166,7 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-app.get('/api/auth/profile', (req, res) => {
+app.get('/api/auth/profile',auth, (req, res) => {
   try {
     const users = readUsers();
     const user = users.find(u => u.id === req.user.id);
