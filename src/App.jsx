@@ -9,11 +9,13 @@ import BlogsSection from './components/BlogsSection';
 import ContactSection from './components/ContactSection';
 import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
+import CodeAssistantChat from './components/CodeAssistantChat';
 import HeroSection from './components/HeroSection';
 import WhyChooseUs from './components/WhyChooseUs';
 
 function App() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,6 +36,11 @@ function App() {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
+    if (!token) {
+      setIsLoggedIn(false);
+    }
     fetchPosts();
   }, []);
 
@@ -102,6 +109,9 @@ function App() {
           } />
           <Route path="/profile" element={<ProfilePage />} />
         </Routes>
+
+        {/* Code Assistant Chat */}
+        <CodeAssistantChat isLoggedIn={isLoggedIn} />
 
         {/* Modals */}
         <LoginModal

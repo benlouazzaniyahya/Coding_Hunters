@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { navigationItems } from '../data/mockData';
-import { UserCircleIcon, BellIcon, ChatBubbleLeftIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { UserCircleIcon, BellIcon, ChatBubbleLeftIcon, Bars3Icon, XMarkIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 
 const Header = ({ onOpenLogin, onOpenRegister }) => {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,6 +15,12 @@ const Header = ({ onOpenLogin, onOpenRegister }) => {
     { id: 2, text: 'New solution to your problem', time: '1h ago' },
     { id: 3, text: 'Your post was featured', time: '2h ago' },
   ]);
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    navigate('/');
+  };
+
   const [messages] = useState([
     { id: 1, from: 'Alice', text: 'Great solution!', time: '5m ago' },
     { id: 2, from: 'Bob', text: 'Need help with...', time: '30m ago' },
@@ -154,6 +161,14 @@ const Header = ({ onOpenLogin, onOpenRegister }) => {
                     <UserCircleIcon className="w-6 h-6 text-gray-700" />
                     <span className="font-medium text-gray-700">Profile</span>
                   </Link>
+                  {/* Logout */}
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-red-50 transition-colors text-red-600 group"
+                  >
+                    <ArrowRightOnRectangleIcon className="w-6 h-6 group-hover:text-red-700" />
+                    <span className="font-medium group-hover:text-red-700">Logout</span>
+                  </button>
                 </>
               ) : (
                 <>
@@ -214,6 +229,13 @@ const Header = ({ onOpenLogin, onOpenRegister }) => {
                     <UserCircleIcon className="w-5 h-5" />
                     <span>Profile</span>
                   </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="py-3 px-4 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl transition-colors flex items-center space-x-3"
+                  >
+                    <ArrowRightOnRectangleIcon className="w-5 h-5" />
+                    <span>Logout</span>
+                  </button>
                   <button
                     className="py-3 px-4 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-colors flex items-center space-x-3"
                     onClick={() => setIsMenuOpen(false)}
