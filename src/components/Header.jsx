@@ -10,6 +10,7 @@ const Header = ({ onOpenLogin, onOpenRegister }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const [notifications] = useState([
     { id: 1, text: 'John liked your post', time: '2m ago' },
     { id: 2, text: 'New solution to your problem', time: '1h ago' },
@@ -30,7 +31,22 @@ const Header = ({ onOpenLogin, onOpenRegister }) => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
-  }, []);
+    
+    const handleClickOutside = (event) => {
+      if (showProfile && !event.target.closest('.profile-menu')) {
+        setShowProfile(false);
+      }
+      if (showNotifications && !event.target.closest('.notifications-menu')) {
+        setShowNotifications(false);
+      }
+      if (showMessages && !event.target.closest('.messages-menu')) {
+        setShowMessages(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [showProfile, showNotifications, showMessages]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -154,13 +170,45 @@ const Header = ({ onOpenLogin, onOpenRegister }) => {
                   </div>
 
                   {/* Profile */}
-                  <Link
-                    to="/profile"
-                    className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors"
-                  >
-                    <UserCircleIcon className="w-6 h-6 text-gray-700" />
-                    <span className="font-medium text-gray-700">Profile</span>
-                  </Link>
+                  <div className="relative">
+                    <button
+                      onClick={() => {
+                        setShowProfile(!showProfile);
+                        setShowNotifications(false);
+                        setShowMessages(false);
+                      }}
+                      className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative"
+                    >
+                      <UserCircleIcon className="w-6 h-6 text-gray-700" />
+                    </button>
+                    {showProfile && (
+                      <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50 border border-gray-200">
+                        <Link
+                          to="/profile"
+                          className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                          onClick={() => setShowProfile(false)}
+                        >
+                          View Profile
+                        </Link>
+                        <Link
+                          to="/settings"
+                          className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                          onClick={() => setShowProfile(false)}
+                        >
+                          Settings
+                        </Link>
+                        <button
+                          onClick={() => {
+                            handleLogout();
+                            setShowProfile(false);
+                          }}
+                          className="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors"
+                        >
+                          Logout
+                        </button>
+                      </div>
+                    )}
+                  </div>
                   {/* Logout */}
                   <button
                     onClick={handleLogout}
