@@ -78,7 +78,7 @@ const ContactSection = () => {
                 </div>
                 <div className="ml-4">
                   <p className="text-lg font-medium">Address</p>
-                  <p className="mt-1">123 Coding Street, Tech Valley, CA 94043</p>
+                  <p className="mt-1">Mohammedia suptech</p>
                 </div>
               </div>
               
