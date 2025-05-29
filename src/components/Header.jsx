@@ -106,8 +106,8 @@ const Header = ({ onOpenLogin, onOpenRegister }) => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform">
-              <span className="text-white font-bold text-xl">CH</span>
+            <div className="h-12 transform group-hover:scale-110 transition-transform">
+              <img src="/images/logo.png" alt="Coding Hunters Logo" className="h-full w-auto" />
             </div>
             <div className="flex flex-col">
               <span className={`font-bold text-xl ${isScrolled || isLoggedIn ? 'text-gray-900' : 'text-white'} group-hover:text-blue-600 transition-colors`}>
@@ -208,8 +208,8 @@ const Header = ({ onOpenLogin, onOpenRegister }) => {
                           className="w-8 h-8 rounded-full object-cover border-2 border-white"
                         />
                       ) : (
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white">
-                          {profile?.username?.charAt(0).toUpperCase() || <UserCircleIcon className="w-6 h-6" />}
+                        <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center overflow-hidden border-2 border-blue-500">
+                          {profile?.username?.charAt(0).toUpperCase() || <img src="/images/logo.png" alt="Coding Hunters Logo" className="w-6 h-6 object-contain" />}
                         </div>
                       )}
                     </Link>
@@ -280,7 +280,7 @@ const Header = ({ onOpenLogin, onOpenRegister }) => {
                     className="py-3 px-4 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-colors flex items-center space-x-3"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <UserCircleIcon className="w-5 h-5" />
+                    <img src="/images/logo.png" alt="Coding Hunters Logo" className="w-5 h-5 object-contain" />
                     <span>Profile</span>
                   </Link>
                   <button
