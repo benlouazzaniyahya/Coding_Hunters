@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoginModal = ({ isOpen, onClose, onSwitchToRegister }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -66,21 +69,26 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister }) => {
     setIsLoading(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const response = await axios.post('http://localhost:5000/api/auth/login', {
+        email: formData.email,
+        password: formData.password
+      });
       
-      // Here you would typically make an API call to authenticate the user
-      console.log('Login attempt:', formData);
+      // Store the token
+      localStorage.setItem('token', response.data.token);
       
-      // Reset form and close modal on success
+      // Reset form and close modal
       setFormData({ email: '', password: '', rememberMe: false });
       onClose();
       
-      // You might want to redirect or update global state here
-      alert('Login successful!');
+      // Navigate to profile page
+      navigate('/profile');
+      
+      // Reload the page to update header state
+      window.location.reload();
       
     } catch (error) {
-      setErrors({ general: 'Login failed. Please try again.' });
+      setErrors({ general: error.response?.data?.message || 'Login failed. Please try again.' });
     } finally {
       setIsLoading(false);
     }

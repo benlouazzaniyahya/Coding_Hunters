@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1685330100000",
+    "username": "demo",
+    "email": "demo@example.com",
+    "password": "$2a$10$8Ux8YwZW.h9rqQH8qZkqT.VTXwVDz0vCm6D4yRvBn1pRNx6lUfzPi",
+    "createdAt": "2025-05-29T03:15:00.000Z",
+    "bio": "Demo user for testing purposes"
+  },
+  {
+    "id": "1748491607554",
+    "username": "kjhk",
+    "email": "hkjhkjh@gmail.com",
+    "password": "$2b$10$vQGf4sVkjaQ3Nb.TD6TjqePOLh0yTDV3jvT1oX.YVpiuF8tn2tztK",
+    "createdAt": "2025-05-29T04:06:47.554Z",
+    "bio": "slkk olks lk djolkmj ^msj mndl icjb fmo c"
+  }
+]

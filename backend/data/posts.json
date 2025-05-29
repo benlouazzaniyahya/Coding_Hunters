@@ -1,0 +1,28 @@
+[
+  {
+    "id": "1685330200000",
+    "title": "Two Sum Problem",
+    "description": "Given an array of integers nums and an integer target, return indices of the two numbers in the array such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice.",
+    "difficulty": "Easy",
+    "code": "function twoSum(nums, target) {\n  const map = new Map();\n  \n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    \n    if (map.has(complement)) {\n      return [map.get(complement), i];\n    }\n    \n    map.set(nums[i], i);\n  }\n  \n  return [];\n}",
+    "tags": [
+      "Arrays",
+      "Hash Table",
+      "Algorithms"
+    ],
+    "author": "1685330100000",
+    "createdAt": "2025-05-29T03:16:40.000Z",
+    "likes": [],
+    "comments": []
+  },
+  {
+    "title": "ayhdohd oih",
+    "description": "ihod ihdlhh dliho i",
+    "difficulty": "Hard",
+    "code": "oih doih odh lid likdjnlkjnd dl nldijb nli ",
+    "tags": [
+      "javascript"
+    ],
+    "id": "1748490480381"
+  }
+]

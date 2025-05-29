@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -89,13 +92,16 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
     setIsLoading(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const response = await axios.post('http://localhost:5000/api/auth/register', {
+        username: formData.firstName,
+        email: formData.email,
+        password: formData.password
+      });
       
-      // Here you would typically make an API call to register the user
-      console.log('Registration attempt:', formData);
+      // Store the token
+      localStorage.setItem('token', response.data.token);
       
-      // Reset form and close modal on success
+      // Reset form and close modal
       setFormData({
         firstName: '',
         lastName: '',
@@ -106,11 +112,14 @@ const RegisterModal = ({ isOpen, onClose, onSwitchToLogin }) => {
       });
       onClose();
       
-      // You might want to redirect or update global state here
-      alert('Registration successful! Please check your email to verify your account.');
+      // Navigate to profile page
+      navigate('/profile');
+      
+      // Reload the page to update header state
+      window.location.reload();
       
     } catch (error) {
-      setErrors({ general: 'Registration failed. Please try again.' });
+      setErrors({ general: error.response?.data?.message || 'Registration failed. Please try again.' });
     } finally {
       setIsLoading(false);
     }
