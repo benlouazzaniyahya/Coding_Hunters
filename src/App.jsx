@@ -3,6 +3,8 @@ import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import WhyChooseUs from './components/WhyChooseUs';
 import BlogsSection from './components/BlogsSection';
+import TutorialsSection from './components/TutorialsSection';
+import ContactSection from './components/ContactSection';
 import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 
@@ -13,7 +15,9 @@ function App() {
       <HeroSection />
       <WhyChooseUs />
       <BlogsSection />
+      <TutorialsSection />
       <Testimonials />
+      <ContactSection />
       <Footer />
     </div>
   );
