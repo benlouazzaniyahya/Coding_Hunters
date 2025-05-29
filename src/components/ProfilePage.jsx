@@ -21,6 +21,7 @@ const ProfilePage = () => {
   const [editingPost, setEditingPost] = useState(null);
   const [showCreatePost, setShowCreatePost] = useState(false);
   const [activeTab, setActiveTab] = useState('problems');
+  const [tagInput, setTagInput] = useState('');
 
   useEffect(() => {
     fetchProfile();
@@ -264,30 +265,124 @@ const ProfilePage = () => {
               <div key={post.id} className="bg-white rounded-xl shadow-lg p-6">
                 {editingPost?.id === post.id ? (
                   <div className="space-y-4">
-                    <input
-                      type="text"
-                      value={editingPost.title}
-                      onChange={(e) => setEditingPost({ ...editingPost, title: e.target.value })}
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                    <textarea
-                      value={editingPost.description}
-                      onChange={(e) => setEditingPost({ ...editingPost, description: e.target.value })}
-                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      rows="3"
-                    />
-                    <div className="flex space-x-4">
-                      <button
-                        onClick={handleUpdatePost}
-                        className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                      <input
+                        type="text"
+                        value={editingPost.title}
+                        onChange={(e) => setEditingPost({ ...editingPost, title: e.target.value })}
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                      <textarea
+                        value={editingPost.description}
+                        onChange={(e) => setEditingPost({ ...editingPost, description: e.target.value })}
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        rows="3"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Code</label>
+                      <textarea
+                        value={editingPost.code}
+                        onChange={(e) => setEditingPost({ ...editingPost, code: e.target.value })}
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono"
+                        rows="6"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Difficulty</label>
+                      <select
+                        value={editingPost.difficulty}
+                        onChange={(e) => setEditingPost({ ...editingPost, difficulty: e.target.value })}
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       >
-                        Save
-                      </button>
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Tags</label>
+                      <div className="flex flex-wrap gap-2 mb-2">
+                        {editingPost.tags?.map((tag, index) => (
+                          <span
+                            key={index}
+                            className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium flex items-center"
+                          >
+                            {tag}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const newTags = [...editingPost.tags];
+                                newTags.splice(index, 1);
+                                setEditingPost({ ...editingPost, tags: newTags });
+                              }}
+                              className="ml-1 text-blue-600 hover:text-blue-800"
+                            >
+                              <XMarkIcon className="h-4 w-4" />
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={tagInput}
+                          onChange={(e) => setTagInput(e.target.value)}
+                          onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                              e.preventDefault();
+                              if (tagInput.trim() && !editingPost.tags?.includes(tagInput.trim())) {
+                                setEditingPost({
+                                  ...editingPost,
+                                  tags: [...(editingPost.tags || []), tagInput.trim()]
+                                });
+                                setTagInput('');
+                              }
+                            }
+                          }}
+                          placeholder="Add a tag and press Enter"
+                          className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (tagInput.trim() && !editingPost.tags?.includes(tagInput.trim())) {
+                              setEditingPost({
+                                ...editingPost,
+                                tags: [...(editingPost.tags || []), tagInput.trim()]
+                              });
+                              setTagInput('');
+                            }
+                          }}
+                          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                        >
+                          Add
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end space-x-4 pt-4">
                       <button
+                        type="button"
                         onClick={() => setEditingPost(null)}
                         className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
                       >
                         Cancel
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleUpdatePost}
+                        className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      >
+                        Save Changes
                       </button>
                     </div>
                   </div>

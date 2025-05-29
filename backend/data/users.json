@@ -38,5 +38,13 @@
     "password": "$2b$10$Qxa.XC11aDxL4ZMQA3fENemTBl6wqat9ZFUtYVFKosW4AMm/D0.1e",
     "createdAt": "2025-05-29T07:40:30.297Z",
     "bio": ""
+  },
+  {
+    "id": "1748513431060",
+    "username": "kjhkajhkjhkjhk",
+    "email": "jhkkdkjd@gmail.com",
+    "password": "$2b$10$8eWDWgnd1UBrffuWLq8gDO1hnLF3kuKRC3wOqNHFrJSaViHh5jXia",
+    "createdAt": "2025-05-29T10:10:31.060Z",
+    "bio": ""
   }
 ]

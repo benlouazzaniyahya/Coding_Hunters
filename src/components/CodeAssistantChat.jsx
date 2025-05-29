@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { MinusIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useOnClickOutside } from '../hooks/useOnClickOutside';
 
 const CodeAssistantChat = ({ isLoggedIn }) => {
   const [messages, setMessages] = useState([]);
@@ -9,8 +10,16 @@ const CodeAssistantChat = ({ isLoggedIn }) => {
   const [isMinimized, setIsMinimized] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const messagesEndRef = useRef(null);
+  const chatRef = useRef(null);
   const GEMINI_API_KEY = 'AIzaSyBs0YzkPOL2WVCxUyeXe51zCWmij17n9Nk';
   const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+  
+  // Close chat when clicking outside
+  useOnClickOutside(chatRef, () => {
+    if (isVisible && !isMinimized) {
+      setIsMinimized(true);
+    }
+  });
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -104,7 +113,10 @@ const CodeAssistantChat = ({ isLoggedIn }) => {
 
   return (
     isVisible && (
-      <div className={`fixed bottom-4 right-4 w-96 ${isMinimized ? 'h-14' : 'h-[500px]'} bg-white rounded-lg shadow-xl flex flex-col transition-all duration-300 ease-in-out`}>
+      <div 
+      ref={chatRef}
+      className={`fixed bottom-4 right-4 w-96 ${isMinimized ? 'h-14' : 'h-[500px]'} bg-white rounded-lg shadow-xl flex flex-col transition-all duration-300 ease-in-out z-50`}
+    >
       <div className="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
         <h3 className="font-semibold">Code Assistant</h3>
         <div className="flex items-center space-x-2">
