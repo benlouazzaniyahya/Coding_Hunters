@@ -156,7 +156,6 @@ export const navigationItems = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Blogs", href: "#blogs" },
-  { name: "Tutorials", href: "#tutorials" },
   { name: "Contact", href: "#contact" }
 ];
 

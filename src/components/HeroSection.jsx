@@ -62,10 +62,6 @@ const HeroSection = () => {
               <div className="text-gray-400">Students</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-white">500+</div>
-              <div className="text-gray-400">Tutorials</div>
-            </div>
-            <div className="text-center">
               <div className="text-3xl md:text-4xl font-bold text-white">50+</div>
               <div className="text-gray-400">Technologies</div>
             </div>
